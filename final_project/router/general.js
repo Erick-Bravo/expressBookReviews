@@ -23,7 +23,7 @@ public_users.post("/register", (req, res) => {
 
   if (username && password) {
     if (!doesExist(username)) {
-      users.push({ user: username, password: password });
+      users.push({ username: username, password: password });
       return res
         .status(200)
         .json({ message: "Register successfull. Please Login" });
