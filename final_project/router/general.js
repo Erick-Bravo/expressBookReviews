@@ -35,23 +35,25 @@ public_users.post("/register", (req, res) => {
 });
 
 // Get the book list available in the shop
-public_users.get("/", function (req, res) {
+public_users.get("/", async (req, res) => {
   //Write your code here
-  return res.send(JSON.stringify(books, null, 1));
+  const response = await books
+  return res.send(JSON.stringify(response, null, 1));
 });
 
 // Get book details based on ISBN
-public_users.get("/isbn/:isbn", function (req, res) {
+public_users.get("/isbn/:isbn", async (req, res) => {
   //Write your code here
   const id = req.params.isbn;
+  const response = await books[id]
   if (id < 1 || id > 10) {
     return res.status(404).send("Book not found");
   }
-  return res.status(200).send(JSON.stringify(books[id], null, 1));
+  return res.status(200).send(JSON.stringify(response, null, 1));
 });
 
 // Get book details based on author
-public_users.get("/author/:author", function (req, res) {
+public_users.get("/author/:author", async(req, res) => {
   //Write your code here
   const author = req.params.author;
   const bookFound = [];
@@ -61,13 +63,14 @@ public_users.get("/author/:author", function (req, res) {
     }
   }
   if (bookFound.length > 0) {
-    return res.status(200).send(JSON.stringify(bookFound[0]));
+    const response = await bookFound[0]
+    return res.status(200).send(JSON.stringify(response));
   }
   return res.status(404).json({ message: "Book Not Found" });
 });
 
 // Get all books based on title
-public_users.get("/title/:title", function (req, res) {
+public_users.get("/title/:title", async(req, res) => {
   //Write your code here
   const title = req.params.title;
   const bookFound = [];
@@ -77,21 +80,23 @@ public_users.get("/title/:title", function (req, res) {
     }
   }
   if (bookFound.length > 0) {
-    return res.status(200).send(JSON.stringify(bookFound[0]));
+    const response = await bookFound[0]
+    return res.status(200).send(JSON.stringify(response));
   }
   return res.status(404).json({ message: "Book Not Found" });
 });
 
 //  Get book review
-public_users.get("/review/:isbn", function (req, res) {
+public_users.get("/review/:isbn", async(req, res) => {
   //Write your code here
   const id = req.params.isbn;
   if (id < 1 || id > 10) {
     return res.status(404).send("Book not found");
   }
+  const response = await {reviews: books[id].reviews}
   return res
     .status(200)
-    .send(JSON.stringify({ reviews: books[id].reviews }, null, 1));
+    .send(JSON.stringify(response, null, 1));
 });
 
 module.exports.general = public_users;
