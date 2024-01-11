@@ -1,8 +1,16 @@
 let books = require("./router/booksdb.js");
 
-const id = 1;
-if (id < 1 || id > 10) {
-  console.log("Book not Found");
-  return
+const isbn = 2
+const reviewInput = "This is a review";
+const userSignedIn = "user12";
+
+let book = books[isbn];
+console.log(book);
+
+if (book) {
+  if (reviewInput) {
+    book["reviews"][userSignedIn] = reviewInput
+  }
 }
-console.log({reviews: books[id].reviews});
+books[isbn] = book
+console.log(books[isbn]);
